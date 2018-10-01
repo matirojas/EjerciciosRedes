@@ -43,6 +43,3 @@ class SummingNumbers:
         return sum, carry
 
 
-if __name__ == "__main__":
-    suma = SummingNumbers()
-    print(suma.feed(1, 1))
