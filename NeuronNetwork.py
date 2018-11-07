@@ -7,30 +7,22 @@ class NeuralNetwork:
         self.firstLayer = firstLayer
         self.lastLayer = lastLayer
         self.layers = layers
-        self.outputs = []
-        self.delta = 0
+        self.output = []
 
-
-    def feed(self, inputs):
+    def feed(self, inputs): # Se le entregan los inputs a la red neuronal y obtiene el conjunto de outputs
         result = self.firstLayer.feed(inputs)
         for i in range(1, len(self.layers)):
             result = self.layers[i].feed(result)
-        return self.lastLayer.outputs
+        self.output = self.lastLayer.outputs
+        return self.output
 
-    def train(self, inputs, desiredOutput):
-        outputs = self.feed(inputs)
+    def backwardPropagateError(self, expectedOutputs):
+        self.lastLayer.backwardPropagateLastLayer(expectedOutputs)
+        for layer in reversed(range(len(self.layers - 1))):
+            layer.backwardPropagateHiddenLayer(expectedOutputs)
 
-        return "the error"
+    def updateWeigths(self):
+        for i in range(0, len(self.layers)):
+            self.layers[i].updateWeights()
 
-    def backwardPropagateError(self,expectedOutputs):
 
-
-    def updateWeight(self,inputs):
-
-if __name__ == "__main__":
-    neuron1 = Neuron([-2, 2], -1.5, 0.1)
-    neuron2 = Neuron([-2, 2], -1.5, 0.1)
-    firstLayer = NeuralLayer(neuron1)
-    lastLayer = NeuralLayer(neuron2)
-    neuralNetwork = NeuralNetwork(firstLayer, lastLayer, [firstLayer, lastLayer])
-    print(neuralNetwork.feed([[0, 0], [0, 1], [1, 0], [1, 1]]))

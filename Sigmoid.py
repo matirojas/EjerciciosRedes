@@ -3,8 +3,8 @@ from cmath import exp
 import numpy as np
 
 class Sigmoid(Perceptron):
-    def __init__(self, weights, bias):
-        super().__init__(weights, bias)
+    def __init__(self, weights, bias, learningRate):
+        super().__init__(weights, bias, learningRate)
 
     def feed(self, inputs):
         assert len(self.weights) == len(inputs)
