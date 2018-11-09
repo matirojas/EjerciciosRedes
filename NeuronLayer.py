@@ -1,28 +1,40 @@
-class NeuralLayer:
-    def __init__(self, neurons, outputs=[], nextLayer=None, PreviousLayer = None):
-        self.outputs = outputs
+class NeuronLayer:
+    def __init__(self, neurons, outputs=[]):
         self.neurons = neurons
-        self.nextLayer = nextLayer
-        self.PreviousLayer = PreviousLayer
+        self.outputs = outputs
+        self.nextLayer = None
+        self.PreviousLayer = None
+        self.inputs = []
 
     def feed(self, someInputValues):
-        for i in range(1, len(self.neurons)):
-            self.outputs.append(self.neurons[i].feed(someInputValues))
+        self.inputs = someInputValues
+        self.outputs = []
+        for neuron in self.neurons:
+            self.outputs.append(neuron.feed(someInputValues))
         return self.outputs
 
     def getNeurons(self):
         return self.neurons
 
     def backwardPropagateLastLayer(self, expectedOutput):
-        for neuron in self.neurons:
-            neuron.backwardPropagateError(expectedOutput)
+        for i in range(len(self.neurons)):
+            self.neurons[i].backwardPropagateError(expectedOutput[i])
 
     def backwardPropagateHiddenLayer(self):
-        for i in range(0, len(self.neurons)):
-            newValue = self.neurons[i + 1].getWeight() * self.neurons[i + 1].getDelta()
-            self.neurons[i].setNewDelta(newValue)
+        for i in range(len(self.neurons)):
+            error_i = 0
+            for neuron in self.nextLayer.getNeurons():
+                    error_i += neuron.getWeight()[i] * neuron.getDelta()
+
+            self.neurons[i].setNewDelta(error_i)
 
     def updateWeights(self):
-        for i in range(0, len(self.neurons)):
-            value = self.PreviousLayer.outputs
-            self.neurons[i].setWeight(value)
+        for i in range(len(self.neurons)):
+            self.neurons[i].updateWeight(self.getInputs())
+
+    def getInputs(self):
+        return self.inputs
+
+    def updateLayers(self, nextLayer, PreviousLayer):
+        self.nextLayer = nextLayer
+        self.PreviousLayer = PreviousLayer

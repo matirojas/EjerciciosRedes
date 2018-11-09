@@ -1,6 +1,6 @@
 from random import random, uniform, randint
 import matplotlib.pyplot as plt
-from Perceptor import Perceptron
+from Perceptron import Perceptron
 
 
 class LearningCurve:

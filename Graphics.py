@@ -1,4 +1,4 @@
-from Perceptor import Perceptron # We are going to train a see results from Perceptrons
+from Perceptron import Perceptron # We are going to train a see results from Perceptrons
 from random import random, uniform
 import matplotlib.pyplot as plt
 

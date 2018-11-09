@@ -1,10 +1,8 @@
 from Perceptron import Perceptron
 from cmath import exp
-import numpy as np
 
 
 class Neuron(Perceptron):  # Creamos una neurona que corresponde a un Sigmoide
-
     def __init__(self, weights, bias, learningRate):  # Inicializamos los parámetros
         super().__init__(weights, bias, learningRate)
         self.delta = 0  # Setteamos valores iniciales tanto para delta como para el output
@@ -17,31 +15,28 @@ class Neuron(Perceptron):  # Creamos una neurona que corresponde a un Sigmoide
             equation += inputs[i] * self.weight[i]
         equation = equation + self.bias
         sigma = 1 / (1 + exp(-equation))
-        if np.real(sigma) > 0.5:
-            self.output = 1
-            return self.output
-        self.output = 0
-        return self.output
+        self.output = sigma
+        return sigma
 
-    def setWeight(self, value):
-        self.weight += self.weight + (self.learningRate * self.delta * value)
-        self.bias += self.bias + (self.learningRate * self.delta)
-
-    def getWeight(self):  # Funciones auxiliares para obtener el peso y
+    def getWeight(self):
         return self.weight
 
-    def getDelta(self):  # el delta
+    def getDelta(self):
         return self.delta
 
-    def setNewDelta(self, value):  # Función para settear deltas desde la clase Neural Network
+    def setNewDelta(self, value):
         error = value
         self.delta = error * self.output * (1 - self.output)
 
     def backwardPropagateError(self,
-                               expectedOutputs):  # Este método es el backwardPropagate asociado a la ultima  neurona
+                               expectedOutputs):
         error = expectedOutputs - self.output
         self.delta = error * self.output * (1 - self.output)
 
+    def getBias(self):
+        return self.bias
+
     def updateWeight(self, input):
-        self.weight = self.weight + (self.learningRate * self.delta * input)
+        for i in range(len(self.weight)):
+            self.weight[i] = self.weight[i] + (self.learningRate * self.delta * input[i])
         self.bias = self.bias + (self.learningRate * self.delta)
