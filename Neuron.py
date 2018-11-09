@@ -1,6 +1,6 @@
 from Perceptron import Perceptron
 from cmath import exp
-
+import numpy as np
 
 class Neuron(Perceptron):  # Creamos una neurona que corresponde a un Sigmoide
     def __init__(self, weights, bias, learningRate):  # Inicializamos los parámetros
@@ -15,8 +15,8 @@ class Neuron(Perceptron):  # Creamos una neurona que corresponde a un Sigmoide
             equation += inputs[i] * self.weight[i]
         equation = equation + self.bias
         sigma = 1 / (1 + exp(-equation))
-        self.output = sigma
-        return sigma
+        self.output = np.real(sigma)
+        return self.output
 
     def getWeight(self):
         return self.weight

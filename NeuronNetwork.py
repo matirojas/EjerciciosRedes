@@ -1,6 +1,7 @@
 from Neuron import Neuron
 from NeuronLayer import NeuronLayer
 from random import random, uniform, randint
+import math
 
 import numpy as np
 
@@ -8,6 +9,7 @@ import numpy as np
 class NeuronNetwork:
     def __init__(self, layers=[]):
         self.layers = layers
+        self.output = 0
         for i in range(len(self.layers)):
             if i == 0:
                 self.layers[i].updateLayers(self.layers[i + 1], None)
@@ -20,6 +22,8 @@ class NeuronNetwork:
         result = self.layers[0].feed(inputs)
         for i in range(1, len(self.layers)):
             result = self.layers[i].feed(result)
+        self.output = result
+        return self.output
 
     def backwardPropagateError(self, expectedOutputs):
         self.layers[-1].backwardPropagateLastLayer(expectedOutputs)
@@ -32,22 +36,16 @@ class NeuronNetwork:
 
     def training(self, inputSet, expectedOutputs, epoch):
         for i in range(0, epoch):
-            self.feed(inputSet)
-            self.backwardPropagateError(expectedOutputs)
-            self.updateWeigths()
+            for j in range(len(inputSet)):
+
+                self.feed(inputSet[j])
+
+                self.backwardPropagateError(expectedOutputs[j])
+                self.updateWeigths()
 
 
 if __name__ == '__main__':
-    Neuron1 = Neuron([0.4, 0.3], 0.5, 0.5)
-    Neuron2 = Neuron([0.3], 0.4, 0.5)
-    Layer1 = NeuronLayer([Neuron1])
-    Layer2 = NeuronLayer([Neuron2])
-    Red1 = NeuronNetwork([Layer1, Layer2])
-    Red1.training([1, 1], [1], 1)
-    print(Neuron1.getWeight())
-    print(Neuron1.getBias())
-    print(Neuron2.getWeight())
-    print(Neuron2.getBias())
+
 
     Neuron1 = Neuron([0.7, 0.3], 0.5, 0.5)
     Neuron2 = Neuron([0.3, 0.7], 0.4, 0.5)
@@ -56,7 +54,7 @@ if __name__ == '__main__':
     Layer1 = NeuronLayer([Neuron1, Neuron2])
     Layer2 = NeuronLayer([Neuron3, Neuron4])
     Red2 = NeuronNetwork([Layer1, Layer2])
-    Red2.training([1, 1], [1, 1], 1)
+    Red2.training([[1, 1]], [[1, 1]], 1)
     print(Neuron1.getWeight())
     print(Neuron1.getBias())
     print(Neuron2.getWeight())
