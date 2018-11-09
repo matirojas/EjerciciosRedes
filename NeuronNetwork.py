@@ -2,7 +2,7 @@ from Neuron import Neuron
 from NeuronLayer import NeuronLayer
 from random import random, uniform, randint
 import math
-
+import matplotlib.pyplot as plt
 import numpy as np
 
 
@@ -35,31 +35,36 @@ class NeuronNetwork:
             self.layers[i].updateWeights()
 
     def training(self, inputSet, expectedOutputs, epoch):
+        listaAciertos = []
+        errorEpoca = []
         for i in range(0, epoch):
+            error = 0
+            aciertos = 0
             for j in range(len(inputSet)):
+                aux = self.feed(inputSet[j])
+                error += math.pow(expectedOutputs[j][0] - aux[0], 2)
 
-                self.feed(inputSet[j])
+                if aux[0] >= 0.5:
+                    aux[0] = 1
+                    if aux[0] == expectedOutputs[j][0]:
+                        aciertos += 1
+                elif aux[0] < 0.5:
+                    aux[0] = 0
+                    if aux[0] == expectedOutputs[j][0]:
+                        aciertos += 1
 
                 self.backwardPropagateError(expectedOutputs[j])
                 self.updateWeigths()
+            listaAciertos.append(aciertos/len(inputSet))
+            errorEpoca.append(error)
 
-
-if __name__ == '__main__':
-
-
-    Neuron1 = Neuron([0.7, 0.3], 0.5, 0.5)
-    Neuron2 = Neuron([0.3, 0.7], 0.4, 0.5)
-    Neuron3 = Neuron([0.2, 0.3], 0.3, 0.5)
-    Neuron4 = Neuron([0.4, 0.2], 0.6, 0.5)
-    Layer1 = NeuronLayer([Neuron1, Neuron2])
-    Layer2 = NeuronLayer([Neuron3, Neuron4])
-    Red2 = NeuronNetwork([Layer1, Layer2])
-    Red2.training([[1, 1]], [[1, 1]], 1)
-    print(Neuron1.getWeight())
-    print(Neuron1.getBias())
-    print(Neuron2.getWeight())
-    print(Neuron2.getBias())
-    print(Neuron3.getWeight())
-    print(Neuron3.getBias())
-    print(Neuron4.getWeight())
-    print(Neuron4.getBias())
+        plt.plot(range(0, epoch), listaAciertos)
+        plt.xlabel("Number of Epoch")
+        plt.ylabel("Fracción de aciertos")
+        plt.title("Curva de aprendizaje")
+        plt.show()
+        plt.plot(range(0, epoch), errorEpoca)
+        plt.xlabel("Number of Epoch")
+        plt.ylabel("MSE")
+        plt.title("Error cuadrático medio")
+        plt.show()
