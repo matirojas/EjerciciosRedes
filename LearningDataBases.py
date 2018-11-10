@@ -16,7 +16,6 @@ def learning():
         for j in range(len(inputs[i])):
             inputs[i][j] = int(inputs[i][j])
 
-
     max = 0
     min = 1
     for i in range(len(inputs)):
@@ -34,10 +33,10 @@ def learning():
         for j in range(len(expectedOutputs[i])):
             expectedOutputs[i][j] = (((expectedOutputs[i][j] - 1) * (1 - 0))/ (2 - 1)) + 0
 
-    Neuron1 = Neuron([uniform(-2, 2), uniform(-2, 2), uniform(-2, 2)], random(), 0.1)
-    Neuron2 = Neuron([uniform(-2, 2), uniform(-2, 2), uniform(-2, 2)], random(), 0.1)
-    Neuron3 = Neuron([uniform(-2, 2), uniform(-2, 2), uniform(-2, 2)], random(), 0.1)
-    Neuron4 = Neuron([uniform(-2, 2), uniform(-2, 2), uniform(-2, 2)], random(), 0.1)
+    Neuron1 = Neuron([uniform(-2, 2), uniform(-2, 2), uniform(-2, 2)], random(), 0.5)
+    Neuron2 = Neuron([uniform(-2, 2), uniform(-2, 2), uniform(-2, 2)], random(), 0.5)
+    Neuron3 = Neuron([uniform(-2, 2), uniform(-2, 2), uniform(-2, 2)], random(), 0.5)
+    Neuron4 = Neuron([uniform(-2, 2), uniform(-2, 2), uniform(-2, 2)], random(), 0.5)
     Neuron5 = Neuron([uniform(-2, 2), uniform(-2, 2), uniform(-2, 2)], random(), 0.5)
     Neuron6 = Neuron([uniform(-2, 2), uniform(-2, 2), uniform(-2, 2)], random(), 0.5)
     Neuron7 = Neuron([uniform(-2, 2), uniform(-2, 2), uniform(-2, 2)], random(), 0.5)
