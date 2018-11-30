@@ -81,6 +81,12 @@ class Algorithm:
                     plt.ylabel("Best fitness")
                     plt.show()
 
+                    matrix = np.zeros((self.numberOfGenes, self.numberOfGenes))
+                    for i in range(self.numberOfGenes):
+                        aux = self.population[k][i]
+                        matrix[i][aux] = 1
+                    print("La siguiente es la representación gráfica, los 1's marcan las posiciones de las reinas")
+                    print(matrix)
                     return
             arreglo.append(best)
             self.reproduction()
