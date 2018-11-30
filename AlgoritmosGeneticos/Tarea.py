@@ -79,6 +79,7 @@ class Algorithm:
                     plt.plot(arreglo)
                     plt.xlabel("Generación")
                     plt.ylabel("Best fitness")
+                    plt.title("Medición algoritmo")
                     plt.show()
 
                     matrix = np.zeros((self.numberOfGenes, self.numberOfGenes))
@@ -136,4 +137,4 @@ class Algorithm:
 
 
 if __name__ == '__main__':
-    Algorithm(4, 10, 0.01)
+    Algorithm(10, 150, 0.01)

@@ -92,4 +92,6 @@ class Algorithm:
 
 
 if __name__ == '__main__':
-    prueba = Algorithm(['a', 'b', 'c'], 12, ['b', 'c', 'a', 'a', 'b', 'c', 'c', 'c', 'a', 'a', 'b', 'c'], 5, 0.01)
+    prueba = Algorithm(['a', 'e', 'i','o','u','c','f','p','r','l','d'], 14, ['p','a','r','a','l','e','l','e','p','i','p','e','d','o']
+                       ,100, 0.01)
+
